@@ -30,7 +30,7 @@ ocr = PaddleOCR(
 def extract_text_tesseract(image_path):
     img = cv2.imread(image_path)
     if img is None:
-        raise FileNotFoundError("❌ Image not found")
+        raise FileNotFoundError(" Image not found")
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray = cv2.resize(gray, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
@@ -129,17 +129,17 @@ def main():
     output_path = r"C:\Users\HP\Desktop\ocr\aadhaar_output.json"
 
     if not os.path.exists(image_path):
-        print("❌ Image path not found")
+        print(" Image path not found")
         return
 
-    print("\n📄 Reading Aadhaar Image...\n")
+    print("\n Reading Aadhaar Image...\n")
 
     # OCR
     tess_text = extract_text_tesseract(image_path)
     paddle_text = extract_text_paddle(image_path)
 
-    print("🔹 Paddle OCR Text:\n", paddle_text)
-    print("🔹 Tesseract OCR Text:\n", tess_text)
+    print(" Paddle OCR Text:\n", paddle_text)
+    print(" Tesseract OCR Text:\n", tess_text)
 
     # Combine OCR results
     combined_text = tess_text + "\n" + paddle_text
@@ -147,17 +147,18 @@ def main():
     # Extract fields
     data = extract_aadhaar_fields(combined_text)
 
-    print("\n✅ Extracted Aadhaar Details:\n")
+    print("\n Extracted Aadhaar Details:\n")
     print(json.dumps(data, indent=4))
 
     # Save JSON
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
-    print(f"\n📁 JSON saved at: {output_path}")
+    print(f"\n JSON saved at: {output_path}")
 
 # -------------------------------------------------
 # RUN
 # -------------------------------------------------
 if __name__ == "__main__":
+
     main()
