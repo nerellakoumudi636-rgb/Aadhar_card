@@ -6,27 +6,19 @@ import json
 import warnings
 from paddleocr import PaddleOCR
 
-# -------------------------------------------------
-# SUPPRESS WARNINGS (OPTIONAL)
-# -------------------------------------------------
+
 warnings.filterwarnings("ignore")
 
-# -------------------------------------------------
-# TESSERACT PATH (WINDOWS)
-# -------------------------------------------------
+
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-# -------------------------------------------------
-# INIT PADDLE OCR (LATEST COMPATIBLE)
-# -------------------------------------------------
+
 ocr = PaddleOCR(
     lang="en",
     use_textline_orientation=True
 )
 
-# -------------------------------------------------
-# TESSERACT OCR
-# -------------------------------------------------
+
 def extract_text_tesseract(image_path):
     img = cv2.imread(image_path)
     if img is None:
@@ -42,9 +34,7 @@ def extract_text_tesseract(image_path):
     text = pytesseract.image_to_string(gray, config=config)
     return text
 
-# -------------------------------------------------
-# PADDLE OCR (FIXED FOR NEW API)
-# -------------------------------------------------
+
 def extract_text_paddle(image_path):
     result = ocr.ocr(image_path)
 
@@ -56,9 +46,7 @@ def extract_text_paddle(image_path):
     return text
 
 
-# -------------------------------------------------
-# AADHAAR FIELD EXTRACTION
-# -------------------------------------------------
+
 def extract_aadhaar_fields(text):
     data = {
         "Name": "",
@@ -70,16 +58,11 @@ def extract_aadhaar_fields(text):
     lines = [l.strip() for l in text.split("\n") if l.strip()]
     text_upper = text.upper()
 
-    # -------------------------
-    # Aadhaar Number
-    # -------------------------
+    
     aadhaar = re.search(r"\b\d{4}\s?\d{4}\s?\d{4}\b", text_upper)
     if aadhaar:
         data["Aadhaar Number"] = aadhaar.group()
 
-    # -------------------------
-    # DOB
-    # -------------------------
     dob_match = re.search(
         r"(DOB|DATE OF BIRTH)[:\s]*([0-9]{2}[/-][0-9]{2}[/-][0-9]{4})",
         text_upper
@@ -87,16 +70,12 @@ def extract_aadhaar_fields(text):
     if dob_match:
         data["DOB"] = dob_match.group(2)
 
-    # -------------------------
-    # Gender
-    # -------------------------
+    
     gender = re.search(r"\b(MALE|FEMALE|TRANSGENDER)\b", text_upper)
     if gender:
         data["Gender"] = gender.group().capitalize()
 
-    # -------------------------
-    # Name (Improved Aadhaar Logic)
-    # -------------------------
+   
     blacklist = [
         "GOVERNMENT", "INDIA", "DOB", "DATE", "BIRTH",
         "MALE", "FEMALE", "TRANSGENDER",
@@ -121,9 +100,7 @@ def extract_aadhaar_fields(text):
 
     return data
 
-# -------------------------------------------------
-# MAIN
-# -------------------------------------------------
+
 def main():
     image_path = r"C:\Users\HP\Desktop\ocr\input images\aadhar4.jpeg"
     output_path = r"C:\Users\HP\Desktop\ocr\aadhaar_output.json"
@@ -156,9 +133,8 @@ def main():
 
     print(f"\n JSON saved at: {output_path}")
 
-# -------------------------------------------------
-# RUN
-# -------------------------------------------------
+
 if __name__ == "__main__":
 
     main()
+
