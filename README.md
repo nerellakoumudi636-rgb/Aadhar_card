@@ -91,7 +91,7 @@ A blacklist removes government and metadata text
 Lines containing 2–4 words are considered valid name candidates
 The first valid candidate is selected (usually appears near the top)
 
-# Name (Improved Aadhaar Logic)
+#Name (Improved Aadhaar Logic)
 # -------------------------
 blacklist = [
     "GOVERNMENT", "INDIA", "DOB", "DATE", "BIRTH",
@@ -110,7 +110,9 @@ for line in lines:
         and not any(word in blacklist for word in words)
     ):
         name_candidates.append(" ".join(words))
-# Pick the first valid name (usually appears near top)
+
+
+#Pick the first Valid name(usually appears near top)
 if name_candidates:
     data["Name"] = name_candidates[0].title()
 
