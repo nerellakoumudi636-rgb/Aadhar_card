@@ -92,7 +92,7 @@ Lines containing 2–4 words are considered valid name candidates
 The first valid candidate is selected (usually appears near the top)
 
 #Name (Improved Aadhaar Logic)
-# -------------------------
+
 blacklist = [
     "GOVERNMENT", "INDIA", "DOB", "DATE", "BIRTH",
     "MALE", "FEMALE", "TRANSGENDER",
