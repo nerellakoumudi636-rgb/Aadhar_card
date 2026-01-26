@@ -7,9 +7,9 @@ It combines Tesseract OCR and PaddleOCR to improve text recognition accuracy and
 Features
 
 Extracts important Aadhaar details:
-Name
+Name,
 Date of Birth (DOB)
-Gender
+Gender,
 Aadhaar Number
 Uses two OCR engines (Tesseract + PaddleOCR) for better accuracy
 Image preprocessing using OpenCV
